@@ -5,14 +5,14 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract RewardToken is ERC20, Ownable {
+    constructor() ERC20("MentorMind Reward", "MMR") Ownable(msg.sender) {
+        _mint(msg.sender, 1000000 * 10 ** decimals()); // Initial supply
+    }
+
     mapping(address => uint256) public rewards;
 
     event RewardIssued(address indexed user, uint256 amount);
     event RewardRedeemed(address indexed user, uint256 amount);
-
-    constructor() ERC20("MentorMind Reward", "MMR") {
-        _mint(msg.sender, 1000000 * 10 ** decimals()); // Initial supply
-    }
 
     function issueReward(address _user, uint256 _amount) external onlyOwner {
         _mint(_user, _amount);
